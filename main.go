@@ -46,7 +46,7 @@ func setupRouter() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"https://fernandopriet1997.github.io/"},
+		AllowOrigins:  []string{"https://fernandopriet1997.github.io"},
 		AllowMethods:  []string{"GET", "POST"},
 		AllowHeaders:  []string{"content-type"},
 		ExposeHeaders: []string{"Content-Length"},
