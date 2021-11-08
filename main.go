@@ -43,9 +43,10 @@ var fleets = []Satellite{
 var mode = "flex"
 
 func setupRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"http://localhost:3000"},
+		AllowOrigins:  []string{"https://fernandopriet1997.github.io/operation-quasar-fire_front/"},
 		AllowMethods:  []string{"GET", "POST"},
 		AllowHeaders:  []string{"content-type"},
 		ExposeHeaders: []string{"Content-Length"},
