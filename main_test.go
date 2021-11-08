@@ -72,3 +72,14 @@ func TetsPostSetPosition(t *testing.T) {
 	router.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
 }
+func TetsResetDefault(t *testing.T) {
+
+	router := setupRouter()
+
+	w := httptest.NewRecorder()
+
+	req, _ := http.NewRequest("DELETE", "/topsecret_reset", nil)
+	req.Header.Add("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+	assert.Equal(t, 200, w.Code)
+}

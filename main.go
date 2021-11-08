@@ -20,6 +20,26 @@ type Satellite struct {
 	Position Point    `json:"position"`
 }
 
+var defaultValues = []Satellite{
+	{
+		Name:     "kenobi",
+		Distance: 0,
+		Message:  []string{},
+		Position: Point{X: -500.0, Y: -200.0},
+	},
+	{
+		Name:     "skywalker",
+		Distance: 0,
+		Message:  []string{},
+		Position: Point{X: 100.0, Y: -100.0},
+	},
+	{
+		Name:     "sato",
+		Distance: 0,
+		Message:  []string{},
+		Position: Point{X: 500.0, Y: 100.0},
+	},
+}
 var fleets = []Satellite{
 	{
 		Name:     "kenobi",
@@ -47,7 +67,7 @@ func setupRouter() *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"https://fernandopriet1997.github.io"},
-		AllowMethods:  []string{"GET", "POST"},
+		AllowMethods:  []string{"GET", "POST", "DELETE"},
 		AllowHeaders:  []string{"content-type"},
 		ExposeHeaders: []string{"Content-Length"},
 	}))
@@ -59,6 +79,7 @@ func setupRouter() *gin.Engine {
 	router.POST("/config-mode", setMode)
 	router.GET("/config-mode", getMode)
 	router.POST("/config/:name", postSetPosition)
+	router.DELETE("/topsecret_reset", resetDefault)
 	return router
 }
 func main() {
@@ -124,7 +145,6 @@ func getSatellite(c *gin.Context) {
 			c.IndentedJSON(http.StatusOK, fleet)
 		}
 	}
-	//c.IndentedJSON(http.StatusNotFound, "")
 }
 func getTopSecretSplit(c *gin.Context) {
 	var satsConf []Satellite
@@ -192,4 +212,10 @@ func postSetPosition(c *gin.Context) {
 	} else {
 		c.IndentedJSON(http.StatusNotFound, "Satellite No encontrado")
 	}
+}
+func resetDefault(c *gin.Context) {
+	for key, _ := range fleets {
+		fleets[key] = defaultValues[key]
+	}
+	c.IndentedJSON(http.StatusOK, "Valores reestablecidos correctamente")
 }
